@@ -38,6 +38,7 @@ class GildedRoseTest extends TestCase
             'quality decreases twice on the sale date' => [0, 20, -1, 18],
             'quality decreases twice after the sale date' => [-5, 20, -6, 18],
             'quality cannot go below 0' => [2, 0, 1, 0],
+            'quality cannot go below 0 when it decreases twice' => [0, 1, -1, 0],
         ]);
     }
 
