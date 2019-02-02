@@ -1,8 +1,12 @@
 <?php
 
-require_once 'gilded_rose.php';
+namespace Tests;
 
-class GildedRoseTest extends PHPUnit_Framework_TestCase {
+use GildedRose\GildedRose;
+use GildedRose\Item;
+use PHPUnit\Framework\TestCase;
+
+class GildedRoseTest extends TestCase {
 
     function testFoo() {
         $items = array(new Item("foo", 0, 0));
