@@ -1,4 +1,15 @@
 {
+    "name": "prodigeris/PHP-GildedRose-Refactoring-Kata",
+    "description": "My PHP solution to GildedRose Refactoring Kata.",
+    "keywords": ["gilded", "rose", "refactoring", "kata", "php", "solution"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Arnas Kazlauskas",
+            "email": "iam@arn.as"
+        }
+    ],
+    "type": "project",
     "require": {
         "php": "^7.1"
     },
