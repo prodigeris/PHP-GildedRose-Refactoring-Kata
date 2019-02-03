@@ -20,7 +20,7 @@ trait Expires
         if ($this->isAfterSale())
         {
             /* @var $this Product */
-            (new ChangeQualityCommand($this))->execute(0);
+            (new ChangeQualityCommand($this))->setQuality(0)->execute();
         }
     }
 }

@@ -2,6 +2,7 @@
 
 namespace GildedRose\Commands;
 
+use GildedRose\Command;
 use GildedRose\Product;
 
 /**
@@ -11,28 +12,29 @@ use GildedRose\Product;
  *
  * @package GildedRose\Commands
  */
-class ChangeQualityCommand
+class ChangeQualityCommand extends Command
 {
     /**
-     * @var \GildedRose\Product
+     * @var int
      */
-    private $product;
-
-    /**
-     * ChangeQualityCommand constructor.
-     *
-     * @param \GildedRose\Product $product
-     */
-    public function __construct(Product $product)
-    {
-        $this->product = $product;
-    }
+    private $quality = 0;
 
     /**
      * @param int $quality
+     * @return \GildedRose\Commands\ChangeQualityCommand
      */
-    public function execute(int $quality): void
+    public function setQuality(int $quality): self
     {
-        $this->product->getItem()->quality = $quality;
+        $this->quality = $quality;
+
+        return $this;
+    }
+
+    /**
+     * Execute the command
+     */
+    public function execute(): void
+    {
+        $this->product->getItem()->quality = $this->quality;
     }
 }

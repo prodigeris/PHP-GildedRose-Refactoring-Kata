@@ -2,6 +2,7 @@
 
 namespace GildedRose\Commands;
 
+use GildedRose\Command;
 use GildedRose\Product;
 
 /**
@@ -11,23 +12,8 @@ use GildedRose\Product;
  *
  * @package \GildedRose\Commands
  */
-class SellInUpdateCommand
+class SellInUpdateCommand extends Command
 {
-    /**
-     * @var \GildedRose\Product
-     */
-    private $product;
-
-    /**
-     * SellInUpdateCommand constructor.
-     *
-     * @param \GildedRose\Product $product
-     */
-    public function __construct(Product $product)
-    {
-        $this->product = $product;
-    }
-
     /**
      * @return void
      */

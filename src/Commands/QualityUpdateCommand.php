@@ -2,6 +2,7 @@
 
 namespace GildedRose\Commands;
 
+use GildedRose\Command;
 use GildedRose\Product;
 
 /**
@@ -11,24 +12,28 @@ use GildedRose\Product;
  *
  * @package \GildedRose\Commands
  */
-class QualityUpdateCommand
+class QualityUpdateCommand extends Command
 {
     /**
-     * @var \GildedRose\Product
+     * @var ChangeQualityCommand
      */
-    private $product;
+    private $change_quality_command;
 
     /**
      * QualityUpdateCommand constructor.
      *
-     * @param \GildedRose\Product $product
+     * @param Product $product
      */
     public function __construct(Product $product)
     {
-        $this->product = $product;
+        parent::__construct($product);
+
+        $this->change_quality_command = new ChangeQualityCommand($this->product);
     }
 
     /**
+     * Execute the command
+     *
      * @return void
      */
     public function execute(): void
@@ -48,9 +53,9 @@ class QualityUpdateCommand
      */
     protected function changeToNewQuality(): void
     {
-        (new ChangeQualityCommand($this->product))->execute(
+        $this->change_quality_command->setQuality(
             $this->product->getNewQuality()
-        );
+        )->execute();
     }
 
     /**
