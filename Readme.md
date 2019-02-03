@@ -4,7 +4,7 @@
 
 ### Installation
 
-`composer require prodigeris/PHP-GildedRose-Refactoring-Kata`
+`composer require prodigeris/php-gilded-rose-refactoring-kata`
 
 ### Usage
 
