@@ -6,6 +6,7 @@ use GildedRose\Item;
 use GildedRose\ProductFactory;
 use GildedRose\Products\AgedBrie;
 use GildedRose\Products\BackstagePass;
+use GildedRose\Products\Conjured;
 use GildedRose\Products\RegularProduct;
 use GildedRose\Products\Sulfuras;
 use PHPUnit\Framework\TestCase;
@@ -42,13 +43,13 @@ class ProductFactoryTest extends TestCase
             'Aged Brie' => ['Aged Brie', AgedBrie::class],
             'Sulfuras the legendary weapon' => ['Sulfuras, Hand of Ragnaros', Sulfuras::class],
             'Some good ol tickets' => ['Backstage passes to a TAFKAL80ETC concert', BackstagePass::class],
+            'Conjured item' => ['Conjured Mana Cake', Conjured::class],
         ];
     }
 
     /**
-     *
      * @dataProvider buildableClassDataProvider
-     *
+     * @covers ProductFactory::build
      */
     public function testIfBuildsTheRightClass($itemName, $expectsClass)
     {

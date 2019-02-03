@@ -6,6 +6,7 @@ use GildedRose\Exceptions\FactoryClassNotAProductException;
 use GildedRose\Exceptions\FactoryClassNotFoundException;
 use GildedRose\Products\AgedBrie;
 use GildedRose\Products\BackstagePass;
+use GildedRose\Products\Conjured;
 use GildedRose\Products\RegularProduct;
 use GildedRose\Products\Sulfuras;
 
@@ -40,6 +41,7 @@ class ProductFactory
         $this->register(Sulfuras::class);
         $this->register(AgedBrie::class);
         $this->register(RegularProduct::class);
+        $this->register(Conjured::class);
     }
 
     /**

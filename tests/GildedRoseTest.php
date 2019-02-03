@@ -93,10 +93,27 @@ class GildedRoseTest extends TestCase
     }
 
     /**
+     * @return array
+     */
+    public function conjuredDataProvider(): array
+    {
+        return self::addNameToDataSet('Conjured Mana Cake', [
+            // sellIn, quality, expectedSellIn, expectedQuality
+            'conjured: simple decrease in quality and sellIn' => [6, 23, 5, 21],
+            'conjured: quality decreases twice as fast on the sale date' => [0, 20, -1, 16],
+            'conjured: quality decreases twice as fast after the sale date' => [-5, 20, -6, 16],
+            'conjured: quality cannot go below 0' => [2, 0, 1, 0],
+            'conjured: quality cannot go below 0 when it decreases twice as fast' => [0, 1, -1, 0],
+        ]);
+    }
+
+
+    /**
      * @dataProvider regularItemDataProvider
      * @dataProvider agedBrieDataProvider
      * @dataProvider sulfurasDataProvider
      * @dataProvider backstagePassesDataProvider
+     * @dataProvider conjuredDataProvider
      *
      * @covers GildedRose::updateQuality()
      *
