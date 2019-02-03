@@ -3,6 +3,7 @@
 namespace GildedRose\Products;
 
 use GildedRose\Product;
+use GildedRose\Traits\Expires;
 
 /**
  * Class BackstagePass
@@ -11,30 +12,36 @@ use GildedRose\Product;
  */
 class BackstagePass extends Product
 {
+    /**
+     *  The name of the product
+     */
     const NAME = 'Backstage passes to a TAFKAL80ETC concert';
 
-    public function updateQuality()
+    /**
+     * Quality increases by 1 over time
+     *
+     * @var int
+     */
+    protected static $quality_step = 1;
+
+    /**
+     * The multiplier
+     *
+     * @var array
+     */
+    protected static $day_range_multiplier = [
+        '10' => 2,
+        '5' => 3,
+    ];
+
+    use Expires;
+
+    /**
+     * Updates sell in, quality and expires after sale
+     */
+    public function update(): void
     {
-        $this->item->sell_in--;
-
-        if ($this->item->sell_in < 0) {
-            $this->item->quality = 0;
-
-            return;
-        }
-
-        if ($this->item->quality >= 50) {
-            return;
-        }
-
-        $this->item->quality++;
-
-        if ($this->item->sell_in < 10 && $this->item->quality < 50) {
-            $this->item->quality++;
-        }
-
-        if ($this->item->sell_in < 5 && $this->item->quality < 50) {
-            $this->item->quality++;
-        }
+        parent::update();
+        $this->expiresAfterSale();
     }
 }

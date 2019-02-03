@@ -10,6 +10,8 @@ namespace GildedRose;
 class GildedRose
 {
     /**
+     * List of items
+     *
      * @var
      */
     private $items;
@@ -25,6 +27,8 @@ class GildedRose
     }
 
     /**
+     * Updates the quality and sell in of the items in the list
+     *
      * @throws \GildedRose\Exceptions\FactoryClassNotAProductException
      * @throws \GildedRose\Exceptions\FactoryClassNotFoundException
      */
@@ -33,7 +37,7 @@ class GildedRose
         $productFactory = new ProductFactory();
 
         foreach ($this->items as $item) {
-            $productFactory->build($item)->updateQuality();
+            $productFactory->build($item)->update();
         }
     }
 }

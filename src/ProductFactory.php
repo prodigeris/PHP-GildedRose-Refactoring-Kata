@@ -43,6 +43,8 @@ class ProductFactory
     }
 
     /**
+     * Adds a product to the list
+     *
      * @param string|Product $product
      * @throws \GildedRose\Exceptions\FactoryClassNotAProductException
      */
@@ -56,6 +58,8 @@ class ProductFactory
     }
 
     /**
+     * Returns built product
+     *
      * @param \GildedRose\Item $item
      * @return \GildedRose\Product
      * @throws \GildedRose\Exceptions\FactoryClassNotFoundException
@@ -70,6 +74,8 @@ class ProductFactory
     }
 
     /**
+     * Creates the class of a product
+     *
      * @param string $className
      * @param Item $item
      * @return \GildedRose\Product

@@ -11,20 +11,15 @@ use GildedRose\Product;
  */
 class AgedBrie extends Product
 {
+    /**
+     * The name of the product
+     */
     const NAME = 'Aged Brie';
 
-    public function updateQuality()
-    {
-        $this->item->sell_in--;
-
-        if ($this->item->quality >= 50) {
-            return;
-        }
-
-        $this->item->quality++;
-
-        if ($this->item->sell_in < 0 && $this->item->quality < 50) {
-            $this->item->quality++;
-        }
-    }
+    /**
+     * Quality increases by 1 over time
+     *
+     * @var int
+     */
+    protected static $quality_step = 1;
 }
