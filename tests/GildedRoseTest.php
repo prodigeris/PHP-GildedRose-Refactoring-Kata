@@ -30,7 +30,7 @@ class GildedRoseTest extends TestCase
     /**
      * @return array
      */
-    public function normalItemDataProvider(): array
+    public function regularItemDataProvider(): array
     {
         return self::addNameToDataSet('+5 Dexterity Vest', [
             // sellIn, quality, expectedSellIn, expectedQuality
@@ -93,7 +93,7 @@ class GildedRoseTest extends TestCase
     }
 
     /**
-     * @dataProvider normalItemDataProvider
+     * @dataProvider regularItemDataProvider
      * @dataProvider agedBrieDataProvider
      * @dataProvider sulfurasDataProvider
      * @dataProvider backstagePassesDataProvider
