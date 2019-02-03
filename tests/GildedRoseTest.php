@@ -103,8 +103,10 @@ class GildedRoseTest extends TestCase
      * @param string $name
      * @param int $sellIn
      * @param int $quality
-     * @param int $expectedQuality
      * @param int $expectedSellIn
+     * @param int $expectedQuality
+     * @throws \GildedRose\Exceptions\FactoryClassNotAProductException
+     * @throws \GildedRose\Exceptions\FactoryClassNotFoundException
      */
     public function testIfItUpdatesItemCorrectly(
         string $name,

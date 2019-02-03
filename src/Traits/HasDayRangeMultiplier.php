@@ -14,7 +14,7 @@ trait HasDayRangeMultiplier
      *
      * @return int
      */
-    public function getMultiplier(): int
+    protected function getMultiplier(): int
     {
         $multiplier = 1;
 
