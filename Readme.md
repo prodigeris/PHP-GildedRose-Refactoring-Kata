@@ -8,6 +8,8 @@
 
 ### Usage
 
+If you are not using containers:
+
 ```php
 <?php
 
@@ -17,7 +19,15 @@ $backstagePass = new \GildedRose\Item('Backstage passes to a TAFKAL80ETC concert
 
 $items = compact('sulfuras', 'regularItem', 'backstagePass');
 
-$gildedRose = new \GildedRose\GildedRose($items);
+$productFactoryRegistry = new \GildedRose\ProductFactoryRegistry();
+
+$productFactoryRegistry->register(\GildedRose\Products\RegularProduct::class);
+$productFactoryRegistry->register(\GildedRose\Products\Sulfuras::class);
+$productFactoryRegistry->register(\GildedRose\Products\BackstagePass::class);
+
+$productFactory = new \GildedRose\ProductFactory($productFactoryRegistry);
+
+$gildedRose = new \GildedRose\GildedRose($items, $productFactory);
 $gildedRose->updateQuality();
 ```
 
@@ -92,18 +102,10 @@ class Conjured extends Product
 }
 ```
 
-Then register the class in the constructor of `ProductFactory`.
+Then register in the container of `ProductFactoryRegistry`.
 
 ```php
-public function __construct()
-{
-    $this->register(BackstagePass::class);
-    $this->register(Sulfuras::class);
-    $this->register(AgedBrie::class);
-    $this->register(RegularProduct::class);
-    // new class
-    $this->register(Conjured::class);
-}
+$productFactoryRegistry->register(Conjured::class);
 ```
 Voilà!
 

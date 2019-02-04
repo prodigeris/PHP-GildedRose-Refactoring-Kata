@@ -23,12 +23,13 @@ class QualityUpdateCommand extends Command
      * QualityUpdateCommand constructor.
      *
      * @param Product $product
+     * @param ChangeQualityCommand $changeQualityCommand
      */
-    public function __construct(Product $product)
+    public function __construct(Product $product, ChangeQualityCommand $changeQualityCommand)
     {
         parent::__construct($product);
 
-        $this->change_quality_command = new ChangeQualityCommand($this->product);
+        $this->change_quality_command = $changeQualityCommand;
     }
 
     /**
@@ -79,7 +80,9 @@ class QualityUpdateCommand extends Command
      */
     protected function setQualityToMax(): void
     {
-        $this->product->getItem()->quality = $this->product->getMaxQuality();
+        $this->change_quality_command->setQuality(
+            $this->product->getMaxQuality()
+        )->execute();
     }
 
     /**
@@ -87,6 +90,8 @@ class QualityUpdateCommand extends Command
      */
     protected function setQualityToMin(): void
     {
-        $this->product->getItem()->quality = $this->product->getMinQuality();
+        $this->change_quality_command->setQuality(
+            $this->product->getMinQuality()
+        )->execute();
     }
 }

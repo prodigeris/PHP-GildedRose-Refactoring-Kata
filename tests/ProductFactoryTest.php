@@ -4,6 +4,7 @@ namespace Tests;
 
 use GildedRose\Item;
 use GildedRose\ProductFactory;
+use GildedRose\ProductFactoryRegistry;
 use GildedRose\Products\AgedBrie;
 use GildedRose\Products\BackstagePass;
 use GildedRose\Products\Conjured;
@@ -19,16 +20,25 @@ use PHPUnit\Framework\TestCase;
 class ProductFactoryTest extends TestCase
 {
     /**
-     * @var
+     * @var ProductFactory
      */
     private $product_factory;
 
     /**
-     * @throws \GildedRose\Exceptions\FactoryClassNotAProductException
+     * @var ProductFactoryRegistry | \PHPUnit\Framework\MockObject\MockObject
      */
-    public function setUp()
+    private $product_factory_registry;
+
+    /**
+     *  Set up ProductFactory with registry
+     */
+    protected function setUp()
     {
-        $this->product_factory = new ProductFactory();
+        $this->product_factory_registry = $this->getMockBuilder(ProductFactoryRegistry::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->product_factory = new ProductFactory($this->product_factory_registry);
     }
 
     /**
@@ -50,9 +60,18 @@ class ProductFactoryTest extends TestCase
     /**
      * @dataProvider buildableClassDataProvider
      * @covers ProductFactory::build
+     *
+     * @param $itemName
+     * @param $expectsClass
+     * @throws \GildedRose\Exceptions\FactoryClassNotFoundException
      */
     public function testIfBuildsTheRightClass($itemName, $expectsClass)
     {
+        $this->product_factory_registry
+            ->expects($this->any())
+            ->method('getProducts')
+            ->will($this->returnValue([$itemName => $expectsClass]));
+
         $this->assertInstanceOf($expectsClass, $this->product_factory->build(new Item($itemName, 10, 0)));
     }
 }

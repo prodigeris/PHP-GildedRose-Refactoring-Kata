@@ -4,11 +4,7 @@ namespace GildedRose;
 
 use GildedRose\Exceptions\FactoryClassNotAProductException;
 use GildedRose\Exceptions\FactoryClassNotFoundException;
-use GildedRose\Products\AgedBrie;
-use GildedRose\Products\BackstagePass;
-use GildedRose\Products\Conjured;
 use GildedRose\Products\RegularProduct;
-use GildedRose\Products\Sulfuras;
 
 /**
  * Class ProductFactory
@@ -18,45 +14,13 @@ use GildedRose\Products\Sulfuras;
 class ProductFactory
 {
     /**
-     * List of products
-     * @var array
+     * @var \GildedRose\ProductFactoryRegistry
      */
-    protected $products = [];
+    private $product_factory_registry;
 
-    /**
-     * Fully qualified name of default product
-     */
-    const DEFAULT_PRODUCT = RegularProduct::class;
-
-    /**
-     * ProductFactory constructor.
-     *
-     * Register Products here
-     *
-     * @throws \GildedRose\Exceptions\FactoryClassNotAProductException
-     */
-    public function __construct()
+    public function __construct(ProductFactoryRegistry $productFactoryRegistry)
     {
-        $this->register(BackstagePass::class);
-        $this->register(Sulfuras::class);
-        $this->register(AgedBrie::class);
-        $this->register(RegularProduct::class);
-        $this->register(Conjured::class);
-    }
-
-    /**
-     * Adds a product to the list
-     *
-     * @param string|Product $product
-     * @throws \GildedRose\Exceptions\FactoryClassNotAProductException
-     */
-    private function register(string $product): void
-    {
-        if (!is_subclass_of($product, Product::class)) {
-            throw new FactoryClassNotAProductException;
-        }
-
-        $this->products[$product::NAME] = $product;
+        $this->product_factory_registry = $productFactoryRegistry;
     }
 
     /**
@@ -68,11 +32,21 @@ class ProductFactory
      */
     public function build(Item $item): Product
     {
-        if (array_key_exists($item->name, $this->products)) {
-            return self::newClass($this->products[$item->name], $item);
+        return self::newClass($this->findProductInRegistry($item->name), $item);
+    }
+
+    protected function getProductsFromRegistry(): array
+    {
+        return $this->product_factory_registry->getProducts();
+    }
+
+    protected function findProductInRegistry($name): string
+    {
+        if (! array_key_exists($name, $this->getProductsFromRegistry())) {
+            return ProductFactoryRegistry::DEFAULT_PRODUCT;
         }
 
-        return self::newClass(self::DEFAULT_PRODUCT, $item);
+        return $this->getProductsFromRegistry()[$name];
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace GildedRose;
 
+use GildedRose\Commands\ChangeQualityCommand;
 use GildedRose\Commands\QualityUpdateCommand;
 use GildedRose\Commands\SellInUpdateCommand;
 use GildedRose\Traits\HasDayRangeMultiplier;
@@ -78,7 +79,7 @@ abstract class Product
     public function update(): void
     {
         (new SellInUpdateCommand($this))->execute();
-        (new QualityUpdateCommand($this))->execute();
+        (new QualityUpdateCommand($this, new ChangeQualityCommand($this)))->execute();
     }
 
     /**

@@ -14,30 +14,34 @@ class GildedRose
      *
      * @var
      */
-    private $items;
+    private static $items = [];
+
+    /**
+     * @var \GildedRose\ProductFactory
+     */
+    public static $product_factory;
 
     /**
      * GildedRose constructor.
      *
-     * @param $items
+     * @param array $items
+     * @param ProductFactory $productFactory
      */
-    public function __construct($items)
+    public function __construct(array $items, ProductFactory $productFactory)
     {
-        $this->items = $items;
+        static::$items = $items;
+        static::$product_factory = $productFactory;
     }
 
     /**
      * Updates the quality and sell in of the items in the list
      *
-     * @throws \GildedRose\Exceptions\FactoryClassNotAProductException
      * @throws \GildedRose\Exceptions\FactoryClassNotFoundException
      */
-    public function updateQuality(): void
+    public static function updateQuality(): void
     {
-        $productFactory = new ProductFactory();
-
-        foreach ($this->items as $item) {
-            $productFactory->build($item)->update();
+        foreach (static::$items as $item) {
+            static::$product_factory->build($item)->update();
         }
     }
 }
